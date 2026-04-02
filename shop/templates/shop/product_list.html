@@ -1,0 +1,104 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Каталог товаров - Игровой Мир{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4"><i class="bi bi-grid"></i> Каталог товаров</h1>
+
+    <!-- Фильтры и поиск -->
+    <div class="filter-section">
+        <form method="get" action="{% url 'product_list' %}">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label for="category" class="form-label">Категория</label>
+                    <select name="category" id="category" class="form-select">
+                        <option value="">Все категории</option>
+                        {% for категория in категории %}
+                            <option value="{{ категория.id }}" {% if selected_category == категория.id|stringformat:"s" %}selected{% endif %}>
+                                {{ категория.название }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="manufacturer" class="form-label">Производитель</label>
+                    <select name="manufacturer" id="manufacturer" class="form-select">
+                        <option value="">Все производители</option>
+                        {% for производитель in производители %}
+                            <option value="{{ производитель.id }}" {% if selected_manufacturer == производитель.id|stringformat:"s" %}selected{% endif %}>
+                                {{ производитель.название }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="search" class="form-label">Поиск</label>
+                    <input type="text" name="search" id="search" class="form-control" 
+                           placeholder="Название или описание..." value="{{ search_query }}">
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-search"></i> Найти
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Список товаров -->
+    {% if товары %}
+        <div class="row g-4">
+            {% for товар in товары %}
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100">
+                        {% if товар.фото_товара %}
+                            <img src="{{ товар.фото_товара.url }}" class="card-img-top product-image" alt="{{ товар.название }}">
+                        {% else %}
+                            <div class="card-img-top product-image d-flex align-items-center justify-content-center bg-secondary">
+                                <i class="bi bi-box display-1 text-muted"></i>
+                            </div>
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ товар.название }}</h5>
+                            <p class="card-text text-muted small flex-grow-1">
+                                {{ товар.описание|truncatechars:100 }}
+                            </p>
+                            <div class="mb-2">
+                                <span class="badge bg-primary">{{ товар.категория.название }}</span>
+                                <span class="badge bg-secondary">{{ товар.производитель.название }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="fs-5 fw-bold text-warning">{{ товар.цена }} ₽</span>
+                                <small class="text-muted">На складе: {{ товар.количество_на_складе }}</small>
+                            </div>
+                            <div class="mt-3 d-grid gap-2">
+                                <a href="{% url 'product_detail' товар.pk %}" class="btn btn-outline-light btn-sm">
+                                    <i class="bi bi-eye"></i> Подробнее
+                                </a>
+                                {% if user.is_authenticated %}
+                                    <form method="post" action="{% url 'add_to_cart' товар.pk %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary btn-sm w-100">
+                                            <i class="bi bi-cart-plus"></i> В корзину
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <a href="{% url 'login' %}" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-box-arrow-in-right"></i> Войти для покупки
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            <i class="bi bi-info-circle display-4"></i>
+            <p class="mt-3">Товары не найдены. Попробуйте изменить параметры поиска.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

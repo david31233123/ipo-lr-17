@@ -1,0 +1,73 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Об авторе - Игровой Мир{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <div class="author-badge">
+                        <i class="bi bi-person-badge"></i> Создатель проекта
+                    </div>
+                    <h1 class="display-5 fw-bold mb-4">Давид</h1>
+                    <p class="lead mb-4">Студент группы <strong>88-ТП</strong></p>
+                    
+                    <div class="row g-4 mt-4">
+                        <div class="col-md-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <i class="bi bi-code-slash display-4 text-primary mb-3"></i>
+                                    <h5>Разработка</h5>
+                                    <p class="text-muted small">Создание веб-приложений на Django</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <i class="bi bi-database display-4 text-success mb-3"></i>
+                                    <h5>Базы данных</h5>
+                                    <p class="text-muted small">Проектирование и оптимизация БД</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <i class="bi bi-palette display-4 text-warning mb-3"></i>
+                                    <h5>Дизайн</h5>
+                                    <p class="text-muted small">Создание современных интерфейсов</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <h4>О проекте</h4>
+                        <p class="text-muted">
+                            Данный проект был разработан в рамках лабораторной работы 
+                            по дисциплине "Интернет-программирование".
+                        </p>
+                        <p class="text-muted">
+                            Приложение представляет собой полноценный интернет-магазин 
+                            настольных игр с системой управления товарами, категориями, 
+                            производителями и корзиной пользователя.
+                        </p>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="{% url 'home' %}" class="btn btn-primary">
+                            <i class="bi bi-house"></i> На главную
+                        </a>
+                        <a href="{% url 'product_list' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-grid"></i> Каталог товаров
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

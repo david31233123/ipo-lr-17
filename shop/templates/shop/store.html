@@ -1,0 +1,110 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}О магазине - Игровой Мир{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold">
+            <i class="bi bi-shop text-warning"></i> О магазине
+        </h1>
+        <p class="lead text-muted">Магазин настольных игр "Игровой Мир"</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5><i class="bi bi-info-circle"></i> О нас</h5>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Мы предлагаем широкий ассортимент настольных игр для всей семьи! 
+                        В нашем каталоге вы найдёте игры на любой вкус: от классических 
+                        стратегий до современных пати-игр.
+                    </p>
+                    <p>
+                        Наша миссия — сделать настольные игры доступными для каждого 
+                        и помочь вам найти игру, которая объединит вашу семью или 
+                        компанию друзей.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5><i class="bi bi-star"></i> Преимущества</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            Более 34 игр в наличии
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            10 категорий товаров
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            5 проверенных производителей
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            Удобная корзина и оформление
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            Фильтрация и поиск товаров
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="bi bi-grid-3x3-gap display-4 text-primary mb-3"></i>
+                    <h5>Широкий ассортимент</h5>
+                    <p class="text-muted small">
+                        Стратегии, семейные игры, пати-игры, карточные игры и многое другое
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="bi bi-shield-check display-4 text-success mb-3"></i>
+                    <h5>Надёжность</h5>
+                    <p class="text-muted small">
+                        Только оригинальная продукция от проверенных производителей
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="bi bi-headset display-4 text-info mb-3"></i>
+                    <h5>Поддержка</h5>
+                    <p class="text-muted small">
+                        Поможем с выбором и ответим на все вопросы
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg">
+            <i class="bi bi-grid"></i> Перейти в каталог
+        </a>
+    </div>
+</div>
+{% endblock %}

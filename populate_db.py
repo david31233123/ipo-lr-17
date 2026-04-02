@@ -6,8 +6,7 @@ django.setup()
 
 from django.contrib.auth.models import User
 from shop.models import Категория, Производитель, Товар, Корзина, ЭлементКорзины
-
-# Очистка существующих данных
+    
 print("Очистка существующих данных...")
 ЭлементКорзины.objects.all().delete()
 Корзина.objects.all().delete()
@@ -16,7 +15,7 @@ print("Очистка существующих данных...")
 Производитель.objects.all().delete()
 User.objects.filter(username__startswith='user').delete()
 
-# ==================== Производители (5 шт.) ====================
+
 print("Создание производителей...")
 производители_data = [
     {'название': 'Hobby World', 'страна': 'Россия', 'описание': 'Крупнейший российский издатель настольных игр'},

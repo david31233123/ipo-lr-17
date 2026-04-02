@@ -1,0 +1,143 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}{{ товар.название }} - Игровой Мир{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Каталог</a></li>
+            <li class="breadcrumb-item active">{{ товар.название }}</li>
+        </ol>
+    </nav>
+
+    <div class="row g-5">
+        <!-- Изображение товара -->
+        <div class="col-md-6">
+            <div class="card">
+                {% if товар.фото_товара %}
+                    <img src="{{ товар.фото_товара.url }}" class="card-img-top" alt="{{ товар.название }}" 
+                         style="height: 400px; object-fit: cover;">
+                {% else %}
+                    <div class="card-img-top d-flex align-items-center justify-content-center bg-secondary" 
+                         style="height: 400px;">
+                        <i class="bi bi-box display-1 text-muted"></i>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Информация о товаре -->
+        <div class="col-md-6">
+            <h1 class="mb-3">{{ товар.название }}</h1>
+            
+            <div class="mb-3">
+                <span class="badge bg-primary fs-6">{{ товар.категория.название }}</span>
+                <span class="badge bg-secondary fs-6">{{ товар.производитель.название }}</span>
+            </div>
+
+            <div class="mb-4">
+                <span class="display-5 fw-bold text-warning">{{ товар.цена }} ₽</span>
+            </div>
+
+            <div class="mb-4">
+                <h5>Описание</h5>
+                <p class="text-muted">{{ товар.описание }}</p>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-6">
+                    <div class="card text-center">
+                        <div class="card-body py-3">
+                            <i class="bi bi-box-seam display-6 text-primary"></i>
+                            <p class="mb-0 mt-2">
+                                <strong>{{ товар.количество_на_складе }}</strong> шт. на складе
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card text-center">
+                        <div class="card-body py-3">
+                            <i class="bi bi-building display-6 text-success"></i>
+                            <p class="mb-0 mt-2">
+                                <strong>{{ товар.производитель.страна }}</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопки действий -->
+            <div class="d-grid gap-2">
+                {% if user.is_authenticated %}
+                    {% if товар.количество_на_складе > 0 %}
+                        <form method="post" action="{% url 'add_to_cart' товар.pk %}">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="number" name="quantity" value="1" min="1" 
+                                       max="{{ товар.количество_на_складе }}" 
+                                       class="form-control" style="max-width: 100px;">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-cart-plus"></i> Добавить в корзину
+                                </button>
+                            </div>
+                        </form>
+                    {% else %}
+                        <button class="btn btn-secondary" disabled>
+                            <i class="bi bi-x-circle"></i> Нет в наличии
+                        </button>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-primary">
+                        <i class="bi bi-box-arrow-in-right"></i> Войдите для покупки
+                    </a>
+                {% endif %}
+                <a href="{% url 'product_list' %}" class="btn btn-outline-light">
+                    <i class="bi bi-arrow-left"></i> Вернуться в каталог
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Дополнительная информация -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Детальная информация</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th style="width: 200px;">Категория:</th>
+                            <td>{{ товар.категория.название }}</td>
+                        </tr>
+                        {% if товар.категория.описание %}
+                        <tr>
+                            <th>Описание категории:</th>
+                            <td>{{ товар.категория.описание }}</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Производитель:</th>
+                            <td>{{ товар.производитель.название }} ({{ товар.производитель.страна }})</td>
+                        </tr>
+                        {% if товар.производитель.описание %}
+                        <tr>
+                            <th>О производителе:</th>
+                            <td>{{ товар.производитель.описание }}</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <th>ID товара:</th>
+                            <td>{{ товар.pk }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
