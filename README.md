@@ -3,6 +3,7 @@
 Магазин настольных игр "Игровой Мир"
 
 ## Структура проекта
+
 boardgame_store/
 ├── boardgame_store/      
 │   ├── settings.py       
