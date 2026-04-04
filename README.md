@@ -2,26 +2,21 @@
 
 Магазин настольных игр "Игровой Мир"
 
-Django-приложение для магазина настольных игр.
-
 ## Структура проекта
-
-```
 boardgame_store/
-├── boardgame_store/      # Основной проект Django
-│   ├── settings.py       # Настройки проекта
-│   ├── urls.py           # Корневой URL-маршрутизатор
-│   └── wsgi.py           # WSGI-конфигурация
-├── shop/                 # Приложение магазина
-│   ├── models.py         # Модели данных
-│   ├── views.py          # Обработчики запросов
-│   ├── urls.py           # URL-маршруты приложения
-│   └── admin.py          # Настройка админ-панели
-├── populate_db.py        # Скрипт заполнения БД
-├── manage.py             # Утилита управления проектом
-└── README.md             # Этот файл
+├── boardgame_store/      
+│   ├── settings.py       
+│   ├── urls.py           
+│   └── wsgi.py           
+├── shop/                 
+│   ├── models.py         
+│   ├── views.py          
+│   ├── urls.py           
+│   └── admin.py          
+├── populate_db.py        
+├── manage.py             
+└── README.md             
 ```
 
 ## Автор
-
-Студент группы 88-ТП Давид, 2026 г.
+Студент группы 88-ТП Давид
