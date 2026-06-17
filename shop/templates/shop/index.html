@@ -1,0 +1,67 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Главная - Магазин игрушек{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="hero p-5 mb-5 rounded-4">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <span class="badge bg-primary mb-3">Магазин игрушек</span>
+                <h1 class="display-5 fw-bold">Игрушки для игр, праздников и семейных вечеров</h1>
+                <p class="lead lh-lg">Выбирайте настольные игры, развивающие наборы, мягкие игрушки и подарки для детей и взрослых. У нас легко найти подарок на любой праздник.</p>
+                <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg mt-3">Перейти в каталог</a>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="{% static 'images/default-boardgame.svg' %}" alt="Игрушечный магазин" class="img-fluid" style="max-height: 360px;">
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-8">
+            <h2 class="mb-4">Популярные товары</h2>
+            <div class="row g-4">
+                {% for товар in popular_products %}
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="card popular-product-card h-100">
+                            {% if товар.фото_товара %}
+                                <img src="{{ товар.фото_товара.url }}" class="product-image" alt="{{ товар.название }}">
+                            {% else %}
+                                {% static товар.placeholder_image as placeholder_image %}
+                                <img src="{{ placeholder_image }}" class="product-image" alt="{{ товар.название }}">
+                            {% endif %}
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">{{ товар.название }}</h5>
+                                <p class="card-text text-muted small flex-grow-1">{{ товар.описание|truncatechars:90 }}</p>
+                                <div class="mt-auto">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="fw-semibold text-primary">{{ товар.цена }} ₽</span>
+                                        <small class="text-muted">{{ товар.количество_на_складе }} шт.</small>
+                                    </div>
+                                    <a href="{% url 'product_detail' товар.pk %}" class="btn btn-outline-primary btn-sm w-100">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12">
+                        <div class="alert alert-info">Пока нет популярных товаров.</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-4 h-100">
+                <h2 class="h5 mb-4">Категории</h2>
+                <div class="list-group list-group-flush">
+                    {% for категория in categories %}
+                        <a href="{% url 'product_list' %}?category={{ категория.id }}" class="list-group-item list-group-item-action border-0">{{ категория.название }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

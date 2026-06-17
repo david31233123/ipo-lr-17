@@ -1,0 +1,41 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Детали заказа{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm p-4">
+                <h2>Заказ №{{ заказ.id }}</h2>
+                <p>Статус: <strong>{{ заказ.статус }}</strong></p>
+                <p>Сумма заказа: <strong>{{ заказ.сумма_заказа }} ₽</strong></p>
+                <h4 class="mt-4">Данные доставки</h4>
+                <dl class="row">
+                    <dt class="col-sm-4">Адрес</dt>
+                    <dd class="col-sm-8">{{ заказ.адрес_доставки }}</dd>
+                    <dt class="col-sm-4">Город</dt>
+                    <dd class="col-sm-8">{{ заказ.город }}</dd>
+                    <dt class="col-sm-4">Почтовый индекс</dt>
+                    <dd class="col-sm-8">{{ заказ.почтовый_индекс }}</dd>
+                    <dt class="col-sm-4">Телефон</dt>
+                    <dd class="col-sm-8">{{ заказ.телефон }}</dd>
+                </dl>
+                <h4 class="mt-4">Товары в заказе</h4>
+                <ul class="list-group mb-4">
+                    {% for item in заказ.элементы.all %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ item.товар.название }}</strong><br>
+                                {{ item.количество }} x {{ item.цена_на_момент_заказа }} ₽
+                            </div>
+                            <span>{{ item.стоимость }} ₽</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'profile' %}" class="btn btn-secondary">Вернуться в профиль</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

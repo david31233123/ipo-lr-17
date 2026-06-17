@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e9c46a"/>
+      <stop offset="100%" stop-color="#f4a261"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" rx="40" ry="40" fill="url(#bg2)"/>
+  <rect x="110" y="90" width="380" height="220" rx="30" fill="#ffffff"/>
+  <rect x="170" y="140" width="260" height="140" rx="24" fill="#264653"/>
+  <circle cx="250" cy="220" r="42" fill="#f4a261"/>
+  <circle cx="350" cy="220" r="42" fill="#2a9d8f"/>
+  <text x="300" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" fill="#264653">Квест-игра</text>
+  <text x="300" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" fill="#264653">Приключения для дома</text>
+</svg>

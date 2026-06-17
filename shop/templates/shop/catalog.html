@@ -1,0 +1,111 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Каталог - Магазин игрушек{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row gy-4">
+        <div class="col-lg-3">
+            <div class="filter-section">
+                <h5 class="mb-4">Фильтры</h5>
+                <form id="filter-form" method="get" action="{% url 'product_list' %}">
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Категория</label>
+                        <select name="category" id="category" class="form-select">
+                            <option value="">Все категории</option>
+                            {% for категория in categories %}
+                                <option value="{{ категория.id }}" {% if selected_category == категория.id|stringformat:"s" %}selected{% endif %}>{{ категория.название }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="manufacturer" class="form-label">Производитель</label>
+                        <select name="manufacturer" id="manufacturer" class="form-select">
+                            <option value="">Все производители</option>
+                            {% for производитель in manufacturers %}
+                                <option value="{{ производитель.id }}" {% if selected_manufacturer == производитель.id|stringformat:"s" %}selected{% endif %}>{{ производитель.название }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="search" class="form-label">Поиск</label>
+                        <input type="search" name="search" id="search" class="form-control" placeholder="Название или описание" value="{{ search_query }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Применить фильтры</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="h3 mb-1">Каталог товаров</h1>
+                    <p class="text-muted mb-0">Найдено товаров: {{ page_obj.paginator.count }}</p>
+                </div>
+                <div id="loading-spinner" class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Загрузка...</span>
+                </div>
+            </div>
+
+            <div id="notification-container"></div>
+            <div class="row g-4" id="product-grid">
+                {% for товар in page_obj.object_list %}
+                    <div class="col-sm-6 col-md-4">
+                        <div class="card h-100">
+                            {% if товар.фото_товара %}
+                                <img src="{{ товар.фото_товара.url }}" class="product-image" alt="{{ товар.название }}">
+                            {% else %}
+                                {% static товар.placeholder_image as placeholder_image %}
+                                <img src="{{ placeholder_image }}" class="product-image" alt="{{ товар.название }}">
+                            {% endif %}
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">{{ товар.название }}</h5>
+                                <p class="card-text text-muted small flex-grow-1">{{ товар.описание|truncatechars:90 }}</p>
+                                <div class="mt-auto">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="fw-semibold text-primary">{{ товар.цена }} ₽</span>
+                                        <small class="text-muted">{{ товар.количество_на_складе }} шт.</small>
+                                    </div>
+                                    <a href="{% url 'product_detail' товар.pk %}" class="btn btn-outline-primary btn-sm w-100">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12">
+                        <div class="alert alert-info">Товары не найдены.</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if page_obj.has_other_pages %}
+                <nav aria-label="Пагинация" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?category={{ selected_category }}&manufacturer={{ selected_manufacturer }}&search={{ search_query }}&page={{ page_obj.previous_page_number }}">Назад</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">Назад</span></li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                <a class="page-link" href="?category={{ selected_category }}&manufacturer={{ selected_manufacturer }}&search={{ search_query }}&page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?category={{ selected_category }}&manufacturer={{ selected_manufacturer }}&search={{ search_query }}&page={{ page_obj.next_page_number }}">Вперёд</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">Вперёд</span></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

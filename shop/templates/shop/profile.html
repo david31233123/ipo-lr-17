@@ -1,0 +1,42 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm p-4 mb-4">
+                <h2>Личный кабинет</h2>
+                <p>Добро пожаловать, <strong>{{ user.username }}</strong>!</p>
+                <dl class="row">
+                    <dt class="col-sm-4">Email</dt>
+                    <dd class="col-sm-8">{{ user.email }}</dd>
+
+                    <dt class="col-sm-4">ФИО</dt>
+                    <dd class="col-sm-8">{{ user.profile.full_name|default:"Не указано" }}</dd>
+
+                    <dt class="col-sm-4">Телефон</dt>
+                    <dd class="col-sm-8">{{ user.profile.phone|default:"Не указан" }}</dd>
+
+                    <dt class="col-sm-4">Адрес доставки</dt>
+                    <dd class="col-sm-8">{{ user.profile.address|default:"Не указан" }}</dd>
+
+                    <dt class="col-sm-4">Город</dt>
+                    <dd class="col-sm-8">{{ user.profile.city|default:"Не указан" }}</dd>
+
+                    <dt class="col-sm-4">Почтовый индекс</dt>
+                    <dd class="col-sm-8">{{ user.profile.postal_code|default:"Не указан" }}</dd>
+
+                    <dt class="col-sm-4">Любимая категория</dt>
+                    <dd class="col-sm-8">{{ user.profile.favorite_category|default:"Не выбрано" }}</dd>
+                </dl>
+                <div class="d-flex gap-2">
+                    <a href="{% url 'settings' %}" class="btn btn-outline-primary">Редактировать профиль</a>
+                    <a href="{% url 'product_list' %}" class="btn btn-secondary">Перейти к каталогу</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

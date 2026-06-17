@@ -1,4 +1,5 @@
 {% extends 'shop/base.html' %}
+{% load static %}
 
 {% block title %}{{ товар.название }} - Игровой Мир{% endblock %}
 
@@ -20,10 +21,9 @@
                     <img src="{{ товар.фото_товара.url }}" class="card-img-top" alt="{{ товар.название }}" 
                          style="height: 400px; object-fit: cover;">
                 {% else %}
-                    <div class="card-img-top d-flex align-items-center justify-content-center bg-secondary" 
-                         style="height: 400px;">
-                        <i class="bi bi-box display-1 text-muted"></i>
-                    </div>
+                    {% static товар.placeholder_image as placeholder_image %}
+                    <img src="{{ placeholder_image }}" class="card-img-top" alt="{{ товар.название }}" 
+                         style="height: 400px; object-fit: cover;">
                 {% endif %}
             </div>
         </div>

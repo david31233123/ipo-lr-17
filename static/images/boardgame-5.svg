@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="bg5" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f72585"/>
+      <stop offset="100%" stop-color="#7209b7"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" rx="40" ry="40" fill="url(#bg5)"/>
+  <rect x="120" y="100" width="360" height="220" rx="28" fill="#ffffff"/>
+  <path d="M160 140h280v80H160z" fill="#4361ee" opacity="0.15"/>
+  <rect x="180" y="230" width="90" height="70" rx="20" fill="#4361ee"/>
+  <rect x="280" y="230" width="90" height="70" rx="20" fill="#4cc9f0"/>
+  <rect x="380" y="230" width="90" height="70" rx="20" fill="#f72585"/>
+  <text x="300" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" fill="#4a0b6b">Семейная игра</text>
+  <text x="300" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#4a0b6b">Соберите команду</text>
+</svg>

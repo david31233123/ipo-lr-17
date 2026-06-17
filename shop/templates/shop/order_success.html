@@ -1,0 +1,375 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Заказ успешно оформлен - Магазин настольных игр{% endblock %}
+
+{% block content %}
+<div class="order-success-container">
+    <div class="success-card">
+        <div class="success-icon">✓</div>
+        
+        <h1>Спасибо за ваш заказ!</h1>
+        
+        <div class="order-number">
+            <p>Номер вашего заказа:</p>
+            <h2>#{{ заказ.id }}</h2>
+        </div>
+
+        <div class="order-details">
+            <h3>Информация о заказе</h3>
+            
+            <div class="detail-row">
+                <span class="detail-label">Дата заказа:</span>
+                <span class="detail-value">{{ заказ.дата_создания|date:"d.m.Y H:i" }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Сумма заказа:</span>
+                <span class="detail-value">{{ заказ.сумма_заказа }} ₽</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Статус:</span>
+                <span class="detail-value status-{{ заказ.статус }}">{{ заказ.get_статус_display }}</span>
+            </div>
+
+            <div class="delivery-info">
+                <h4>Адрес доставки:</h4>
+                <p>
+                    {{ заказ.адрес_доставки }}<br>
+                    {{ заказ.город }}, {{ заказ.почтовый_индекс }}<br>
+                    Телефон: {{ заказ.телефон }}
+                </p>
+            </div>
+        </div>
+
+        <div class="order-items">
+            <h3>Заказанные товары</h3>
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Товар</th>
+                        <th>Кол-во</th>
+                        <th>Цена</th>
+                        <th>Стоимость</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for элемент in заказ.элементы.all %}
+                        <tr>
+                            <td>{{ элемент.товар.название }}</td>
+                            <td class="text-center">{{ элемент.количество }}</td>
+                            <td class="text-right">{{ элемент.цена_на_момент_заказа }} ₽</td>
+                            <td class="text-right">{{ элемент.стоимость }} ₽</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="next-steps">
+            <h3>Что дальше?</h3>
+            <ul>
+                <li>✓ Чек отправлен на вашу электронную почту</li>
+                <li>📦 Мы подготовим ваш заказ к отправке</li>
+                <li>📬 Вы получите уведомление о статусе доставки</li>
+                <li>🎁 Спасибо за покупку!</li>
+            </ul>
+        </div>
+
+        <div class="action-buttons">
+            <a href="{% url 'product_list' %}" class="btn btn-primary">Продолжить покупки</a>
+            <a href="{% url 'download_check' заказ.id %}" class="btn btn-secondary">Скачать чек</a>
+            <a href="{% url 'home' %}" class="btn btn-outline">На главную</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.order-success-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.success-card {
+    background-color: white;
+    border: 2px solid #d4edda;
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    margin: 0 auto 30px;
+    animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+.success-card h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.order-number {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+}
+
+.order-number p {
+    color: #666;
+    margin: 0 0 10px 0;
+    font-size: 14px;
+}
+
+.order-number h2 {
+    color: #4472C4;
+    margin: 0;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.order-details {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.order-details h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 16px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    color: #666;
+    font-weight: 500;
+}
+
+.detail-value {
+    color: #333;
+    font-weight: 600;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.status-processing {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.status-shipped {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.status-delivered {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.delivery-info {
+    background-color: #e8f9f5;
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 15px;
+    text-align: left;
+}
+
+.delivery-info h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #2c5a4d;
+    font-size: 14px;
+}
+
+.delivery-info p {
+    margin: 0;
+    color: #2c5a4d;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.order-items {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.order-items h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 16px;
+}
+
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.items-table th {
+    background-color: #e8f0ff;
+    padding: 10px 8px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #4472C4;
+    font-size: 13px;
+}
+
+.items-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.next-steps {
+    background-color: #e8f9f5;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.next-steps h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #2c5a4d;
+    font-size: 16px;
+}
+
+.next-steps ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.next-steps li {
+    padding: 10px 0;
+    color: #2c5a4d;
+    font-size: 14px;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #4472C4;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #3456a4;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #4472C4;
+    border: 2px solid #4472C4;
+}
+
+.btn-outline:hover {
+    background-color: #4472C4;
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .success-card {
+        padding: 20px;
+    }
+
+    .order-number h2 {
+        font-size: 24px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+}
+</style>
+{% endblock %}

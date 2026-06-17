@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fefefe" />
+      <stop offset="100%" stop-color="#dde7f2" />
+    </linearGradient>
+    <linearGradient id="piece" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#007bff" />
+      <stop offset="100%" stop-color="#3f7dcb" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" rx="24" ry="24" fill="url(#bg)" />
+  <rect x="60" y="60" width="220" height="280" rx="20" fill="#ffffff" stroke="#cfd8e3" stroke-width="4" />
+  <rect x="320" y="60" width="220" height="112" rx="16" fill="#ffffff" stroke="#cfd8e3" stroke-width="4" />
+  <rect x="320" y="188" width="220" height="152" rx="16" fill="#ffffff" stroke="#cfd8e3" stroke-width="4" />
+  <circle cx="430" cy="110" r="28" fill="url(#piece)" />
+  <circle cx="470" cy="170" r="22" fill="#ffc107" />
+  <circle cx="380" cy="204" r="26" fill="#28a745" />
+  <path d="M230 150 C250 130, 310 130, 330 150" stroke="#6c757d" stroke-width="12" fill="none" stroke-linecap="round" />
+  <text x="90" y="220" font-family="Inter, sans-serif" font-size="40" fill="#495057">Board</text>
+  <text x="90" y="270" font-family="Inter, sans-serif" font-size="40" fill="#495057">Game</text>
+</svg>
